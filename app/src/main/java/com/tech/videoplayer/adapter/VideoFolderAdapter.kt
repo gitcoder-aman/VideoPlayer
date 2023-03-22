@@ -1,5 +1,6 @@
 package com.tech.videoplayer.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.util.Log
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.tech.videoplayer.R
 import com.tech.videoplayer.activity.VideoFilesActivity
 import com.tech.videoplayer.model.MediaFilesModel
+import com.tech.videoplayer.utils.FetchMediaFiles
 
 class VideoFolderAdapter(
     private  var mediaFiles: ArrayList<MediaFilesModel>,
@@ -18,11 +20,15 @@ class VideoFolderAdapter(
     private  var context: Context
 ) : RecyclerView.Adapter<VideoFolderAdapter.ViewHolder>() {
 
+    private var videoFileArrayList:ArrayList<MediaFilesModel> = ArrayList()
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.folder_item, parent, false)
         return ViewHolder(view)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         val indexPath:Int = folderPath[position].lastIndexOf("/")  //last file name found of index start like /storage/emulated/0/DCIM/Camera (camera getting index)
@@ -36,7 +42,10 @@ class VideoFolderAdapter(
         holder.folderName.text = nameOfFolder
         holder.folderPath.text = folderPath[position]
         Log.d("@@@@", "Folder Path ${holder.folderPath.text}")
-        holder.noOfFiles.text = "5 Videos"
+
+        videoFileArrayList = FetchMediaFiles.fetchMedia(nameOfFolder,context)
+
+        holder.noOfFiles.text = videoFileArrayList.size.toString() +" videos"
 
         holder.itemView.setOnClickListener {
             val intent = Intent(context,VideoFilesActivity::class.java)

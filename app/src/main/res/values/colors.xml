@@ -10,4 +10,5 @@
 
 
     <color name="allow_access">#22354F</color>
+    <color name="light_dark">#74000000</color>
 </resources>
