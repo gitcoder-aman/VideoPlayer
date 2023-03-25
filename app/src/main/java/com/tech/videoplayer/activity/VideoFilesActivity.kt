@@ -7,6 +7,7 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.tech.videoplayer.adapter.VideoFilesAdapter
@@ -25,6 +26,8 @@ class VideoFilesActivity : AppCompatActivity() {
 
         folderName = intent.getStringExtra("folderName").toString()
         supportActionBar?.title = folderName
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         showVideoFiles()
 
@@ -38,6 +41,11 @@ class VideoFilesActivity : AppCompatActivity() {
         binding.videosRv.adapter = videoFilesAdapter
         binding.videosRv.layoutManager = LinearLayoutManager(this,RecyclerView.VERTICAL,false)
         videoFilesAdapter.notifyDataSetChanged()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        finish()
+        return super.onOptionsItemSelected(item)
     }
 
 

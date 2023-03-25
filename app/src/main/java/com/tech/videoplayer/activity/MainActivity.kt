@@ -86,7 +86,7 @@ class MainActivity : AppCompatActivity() {
                 val displayName: String =
                     cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.DISPLAY_NAME) as Int)
                 val size: String =
-                    cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.SIZE) as Int)
+                    cursor.getString((cursor.getColumnIndex(MediaStore.Video.Media.SIZE)) as Int)
                 val duration: String =
                     cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.DURATION) as Int)
                 val path: String =

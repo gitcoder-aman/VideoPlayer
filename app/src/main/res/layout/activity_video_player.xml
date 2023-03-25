@@ -1,9 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
+    android:id="@+id/frameMainLayout"
+    android:background="@color/black"
+    android:keepScreenOn="true"
     tools:context=".activity.VideoPlayerActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <include layout="@layout/custom_playback_view"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <VideoView
+            android:id="@+id/videoView"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:keepScreenOn="true"
+            android:layout_centerVertical="true" />
+
+<!--        <com.google.android.exoplayer2.ui.PlayerView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:id="@+id/exoplayer_view"-->
+<!--            android:background="@color/black"-->
+<!--            app:hide_on_touch="true"-->
+<!--            app:show_timeout="4000"-->
+<!--            app:surface_type="surface_view"-->
+<!--            app:resize_mode="fit"-->
+<!--            app:player_layout_id="@layout/exo_player_view"-->
+<!--            app:rewind_increment="10000"-->
+<!--            app:fastforward_increment="10000"-->
+<!--            app:shutter_background_color="@color/black"-->
+<!--            app:use_controller="true"-->
+<!--            app:controller_layout_id="@layout/custom_playback_view"/>-->
+
+    </RelativeLayout>
+
+
+
+
+
+</RelativeLayout>

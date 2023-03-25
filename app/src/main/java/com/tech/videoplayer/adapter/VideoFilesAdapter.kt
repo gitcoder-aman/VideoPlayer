@@ -2,6 +2,7 @@ package com.tech.videoplayer.adapter
 
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,8 @@ import com.bumptech.glide.Glide
 import com.tech.videoplayer.R
 import com.tech.videoplayer.activity.VideoPlayerActivity
 import com.tech.videoplayer.model.MediaFilesModel
+import com.tech.videoplayer.utils.StringTOLong
+import com.tech.videoplayer.utils.timeConversion
 import java.io.File
 
 class VideoFilesAdapter(
@@ -36,11 +39,13 @@ class VideoFilesAdapter(
         val model = videoList[position]
         holder.videoName.text = model.getDisplayName()
         val size: String = model.getSize()
-        Log.d("@@@@", "" + size)
-//        holder.videoSize.text = android.text.format.Formatter.formatFileSize(context,(size as Long))
+        Log.d("@@@@", "Size " + size)
+
+        val videoSize: Long = StringTOLong().stringToLong(size)
+        holder.videoSize.text = android.text.format.Formatter.formatFileSize(context,videoSize)
 
         val milliSeconds: String = model.getDuration()
-        holder.videoDuration.text = timeConversion(milliSeconds)
+        holder.videoDuration.text = timeConversion().timeConvert(milliSeconds)
 
         Glide.with(context)
             .load(File(model.getPath()))
@@ -52,6 +57,12 @@ class VideoFilesAdapter(
         }
         holder.itemView.setOnClickListener {
             val intent = Intent(context, VideoPlayerActivity::class.java)
+            intent.putExtra("position",position)
+            intent.putExtra("video_title",model.getDisplayName())
+
+            val bundle:Bundle = Bundle()
+            bundle.putParcelableArrayList("videoArrayList",videoList)
+            intent.putExtras(bundle)
             context.startActivity(intent)
         }
 
@@ -73,23 +84,5 @@ class VideoFilesAdapter(
             videoDuration = itemView.findViewById(R.id.video_duration)
         }
 
-    }
-
-    private fun timeConversion(value: String): String {
-        val videoTime: String
-        val duration:Int = Integer.parseInt(value)
-
-        var secs: Int = duration / 1000
-        val hrs: Int = (secs / 3600)
-        secs -= hrs * 3600  // update the secs value
-        val min: Int = secs / 60
-        secs -= min * 60
-
-        if (hrs > 0) {
-            videoTime = String.format("%02d:%02d:%02d", hrs, min, secs)
-        } else {
-            videoTime = String.format("%02d:%02d", min, secs)
-        }
-        return videoTime
     }
 }
